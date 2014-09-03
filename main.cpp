@@ -4,12 +4,15 @@
 #include <signal.h>
 
 #include <iostream>
+#include <condition_variable>
+#include <chrono>
+#include <thread>
 
 using namespace boostMUD::world;
 using namespace boostMUD::util;
 
-boost::mutex sleepy_mutex;
-boost::condition_variable sleepy_variable;
+std::mutex sleepy_mutex;
+std::condition_variable sleepy_variable;
 
 bool done = false;
 
@@ -66,33 +69,36 @@ int main(int argc, char* argv[]) {
 	::signal(SIGINT, SigHandler);
 	::signal(SIGTERM, SigHandler);
 	
+	{
 	TcpServer server(4004, make_echo);
 	
 	std::cout << "Sleeping..." << std::endl;
 	
-	//boost::mutex::scoped_lock lock(sleepy_mutex);
-	//sleepy_variable.wait(lock);
+	//std::unique_lock<std::mutex> lock(sleepy_mutex);
+	//sleepy_variable.wait(lock,[]{return done;});
 	
 	//std::cout << "Main thread woke up!" << std::endl;
 	
 	while(!done) {
-		boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	}
-	
+	}
 	std::cout << "Exiting..." << std::endl;
 	
 
 return 0;
 }
 
-void SigHandler(int signal) {
-	if (signal == SIGINT || signal == SIGTERM) {
+void SigHandler(int sign) {
+	if (sign == SIGINT || sign == SIGTERM) {
+		::signal(sign,SIG_IGN);
 		std::cout << "Received shutdown sig!" << std::endl;
-		//::signal(signal,SIG_IGN);
-		//boost::mutex::scoped_lock lock(sleepy_mutex);
+		
+		//std::unique_lock<std::mutex> lock(sleepy_mutex);
 		//std::cout << "Sleepy mutex locked!" << std::endl;
-		//sleepy_variable.notify_all();
-		//std::cout << "Woke up main thread." << std::endl;
 		done = true;
+		//sleepy_variable.notify_one();
+		//std::cout << "Woke up main thread." << std::endl;
+		
 	}
 }
