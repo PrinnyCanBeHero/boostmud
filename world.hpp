@@ -23,6 +23,7 @@ public:
 		return "The requested room was not found.";
 	}
 	boost::uint32_t id() const { return _id; }
+
 private:
 	const boost::uint32_t _id;
 };
@@ -33,6 +34,7 @@ public:
 	World() = default;
 	Room& room(boost::uint32_t id);
 	void add(std::shared_ptr<Room> room);
+	const std::string welcomeMsg() const;
 private:
 	std::map<boost::uint32_t, std::shared_ptr<Room>> _rooms;	
 };

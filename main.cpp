@@ -1,7 +1,10 @@
+#include "console.hpp"
 #include "world.hpp"
 #include "tcpserver.hpp"
 
 #include <signal.h>
+
+#include <boost/bind.hpp>
 
 #include <iostream>
 #include <condition_variable>
@@ -49,9 +52,9 @@ public:
 	}
 };
 
-TcpSession::pointer make_echo(boost::asio::io_service& io)
+TcpSession::pointer make_echo(World& world, boost::asio::io_service& io)
 {
-	return std::make_shared<EchoSession>(io);
+	return std::make_shared<Console>(world, io);
 }
 
 void SigHandler(int signal);
@@ -70,7 +73,7 @@ int main(int argc, char* argv[]) {
 	::signal(SIGTERM, SigHandler);
 	
 	{
-	TcpServer server(4004, make_echo);
+	TcpServer server(4004, boost::bind(make_echo, boost::ref(world), _1));
 	
 	std::cout << "Sleeping..." << std::endl;
 	

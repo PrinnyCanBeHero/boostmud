@@ -23,6 +23,12 @@ _rooms[room->id()] = room;
 
 }
 
+const std::string World::welcomeMsg() const {
+
+	return "One day, this shall be a MUD.\n\n\n\nHowever, today is not that day.\n";
+
+}
+
 }
 
 }

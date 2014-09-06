@@ -42,6 +42,9 @@ class ByteArray {
 		inline const size_t& size() const { return m_size; }
         /** Clears the array */
         inline void clear() { m_size = 0; m_buffer.reset(); }
+		
+		inline const char* begin() const { return ptr(); }
+		inline const char* end() const { return ptr()+size(); }
 
 	private:
 		std::unique_ptr<char[]> m_buffer;
