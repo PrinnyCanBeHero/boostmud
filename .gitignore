@@ -1,3 +1,5 @@
 .scon*
 *.o
 boostmud.exe
+bin/*.dll
+bin/*.dll.a

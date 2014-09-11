@@ -8,7 +8,7 @@
 #ifndef TCPSTREAMHANDLER_H_
 #define TCPSTREAMHANDLER_H_
 
-#include "bytearray.hpp"
+#include "util/bytearray.hpp"
 
 namespace boostMUD {
 namespace util {

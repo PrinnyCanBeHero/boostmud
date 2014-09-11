@@ -1,0 +1,9 @@
+
+Import('env')
+
+boostmud = env.Program(target='#/bin/boostmud', 
+   LIBS=env['LIBS']+['boostmud-util', 'boostmud-world'],
+  source = Glob('*.cpp'))
+
+Default(boostmud)
+	

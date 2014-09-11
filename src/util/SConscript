@@ -1,0 +1,9 @@
+
+Import('env')
+
+lib = env.SharedLibrary(target = '#/bin/boostmud-util',
+	LIBS=env['LIBS']+['boostmud-world'],
+	source= Glob('*.cpp') )
+	
+Default(lib)
+	

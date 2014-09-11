@@ -15,8 +15,8 @@
 #include <boost/signals.hpp>
 #include <boost/signals2.hpp>
 
-#include "tcpstreamhandler.hpp"
-#include "threadsafequeue.hpp"
+#include "util/tcpstreamhandler.hpp"
+#include "util/threadsafequeue.hpp"
 
 namespace boostMUD {
 namespace util {

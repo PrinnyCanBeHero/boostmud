@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "room.hpp"
+#include "world/room.hpp"
 
 namespace boostMUD
 {

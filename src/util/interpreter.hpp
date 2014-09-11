@@ -1,7 +1,7 @@
 #ifndef INTERPRETER_HPP
 #define INTERPRETER_HPP
 
-#include "world.hpp"
+#include "world/world.hpp"
 
 #include <boost/optional.hpp>
 

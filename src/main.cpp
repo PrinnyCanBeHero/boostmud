@@ -1,6 +1,6 @@
-#include "console.hpp"
-#include "world.hpp"
-#include "tcpserver.hpp"
+#include "util/console.hpp"
+#include "util/tcpserver.hpp"
+#include "world/world.hpp"
 
 #include <signal.h>
 

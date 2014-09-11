@@ -1,9 +1,9 @@
 #ifndef CONSOLE_HPP_
 #define CONSOLE_HPP_
 
-#include "interpreter.hpp"
-#include "tcpserver.hpp"
-#include "world.hpp"
+#include "util/interpreter.hpp"
+#include "util/tcpserver.hpp"
+#include "world/world.hpp"
 
 #include <vector>
 
