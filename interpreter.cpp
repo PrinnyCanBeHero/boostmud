@@ -18,7 +18,7 @@ boost::optional<std::string> Interpreter::interpret(const std::string &input)
 	{
 		if (c > 127)
 		{
-			std::cout << "CONTROL: " << (int)(unsigned char)c << std::endl;
+			std::cerr << "CONTROL: " << (int)(unsigned char)c << std::endl;
 		}
 		else if (c == '\r') {
 			if(!buffer.empty()) {
@@ -31,7 +31,6 @@ boost::optional<std::string> Interpreter::interpret(const std::string &input)
 			
 		}
 		else {
-			std::cout << "Push: " << c << ' ' << (int)c << std::endl;
 			buffer.push_back(c);
 		}
 	}

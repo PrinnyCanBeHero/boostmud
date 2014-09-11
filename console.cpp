@@ -78,7 +78,6 @@ void Console::handleCommand(unsigned char cmd) {
 }
 
 Console::~Console() {
-	std::cout << "Console dying!" << std::endl;
 }
 
 void Console::handleOption(unsigned char cmd, unsigned char option)
@@ -89,16 +88,16 @@ void Console::handleOption(unsigned char cmd, unsigned char option)
 		if(option == option::SUPPRESS_GA) {
 			reply->data()[1] = command::WILL;
 			suppress_ga = true;
-			std::cout << "Informing client we will suppress GA." << std::endl;
+			//std::cout << "Informing client we will suppress GA." << std::endl;
 		}
 		else if(option == option::ECHO) {
 			reply->data()[1] = command::WILL;
 			echo = true;
-			std::cout << "Informing client we will echo." << std::endl;
+			//std::cout << "Informing client we will echo." << std::endl;
 		}
 		else {
 			reply->data()[1] = command::WONT;
-			std::cout << "Informing client we will not do option: " << (int)option << std::endl;
+			//std::cout << "Informing client we will not do option: " << (int)option << std::endl;
 		}
 		reply->data()[2] = option;
 		
@@ -139,7 +138,6 @@ void Console::interpretInput()
 }
 
 void Console::consume(unsigned char c) {
-	//std::cout << "CONSUME " << (int)c << std::endl;
 	if(c == IAC_CHAR) {
 		interpretInput();
 		control_buffer.push_back(IAC_CHAR);
@@ -160,7 +158,6 @@ void Console::consume(unsigned char c) {
 }
 
 void Console::iac(unsigned char c) {
-	//std::cout << "IAC " << (int)c << std::endl;
 	control_buffer.push_back(c);
 	if (in_option_range(c)) {
 		consume_byte = boost::bind(&Console::option,this,_1);
@@ -173,14 +170,12 @@ void Console::iac(unsigned char c) {
 }
 
 void Console::option(unsigned char c) {
-	//std::cout << "OPTION " << (int)c << std::endl;
 	handleOption(control_buffer.back(), c);
 	consume_byte = boost::bind(&Console::consume,this,_1);
 	control_buffer.clear();
 }
 
 void Console::discard_sub(unsigned char c) {
-	//std::cout << "DISCARD_SUB " << (int)c << std::endl;
 	if(c == command::SE) {
 		consume_byte = boost::bind(&Console::consume,this,_1);
 	}
@@ -193,7 +188,6 @@ void Console::do_echo(unsigned char c) {
 }
 
 void Console::handleIncoming(const ByteArray& bytes) {
-	//std::cout << "HANDLE INPUT" << std::endl;
 	std::vector<unsigned char> msg(control_buffer.size() + bytes.size());
 		
 	if (!control_buffer.empty())

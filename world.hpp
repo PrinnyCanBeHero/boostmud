@@ -15,6 +15,9 @@ namespace boostMUD
 namespace world
 {
 
+/**
+ * A room was requested that does not exist.
+ */
 class room_not_found : public std::exception {
 public:
 	room_not_found(boost::uint32_t id) 

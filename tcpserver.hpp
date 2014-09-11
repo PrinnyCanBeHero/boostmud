@@ -81,6 +81,9 @@ class TcpServer {
 	TcpSessionMaker m_creator;
 	std::shared_ptr<boost::thread> m_thread;
 
+	/**
+	 * Asynchronously wait for an incoming client connection.
+	 */
 	void start_accept() {
 		using boost::asio::ip::tcp;
 		TcpSession::pointer s = m_creator(m_acceptor.get_io_service());
@@ -88,6 +91,9 @@ class TcpServer {
 				boost::bind(&TcpServer::handle_accept,this,s,boost::asio::placeholders::error));
 	}
 
+	/**
+	 * Handle incoming client connection.
+	 */
 	void handle_accept(TcpSession::pointer s, const boost::system::error_code& error) {
 		if (!error) {
 			s->start();
@@ -97,6 +103,10 @@ class TcpServer {
 	}
 
 public:
+    /**
+	 * Start a server on the specified port. 
+	 * The creator is used to create TcpSession objects for new connections.
+	 */
 	TcpServer(boost::uint16_t port, TcpSessionMaker creator)
 	: m_work(m_service),
 	  m_acceptor(m_service,
